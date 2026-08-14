@@ -182,3 +182,308 @@
     border-right-color: var(--border);
   }
 }
+
+/* ---- Breadboard node ---- */
+
+.breadboard-node {
+  position: relative;
+  box-sizing: border-box;
+  background: #efedE6;
+  border: 1px solid #c7c3b6;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.2);
+}
+
+.bb-rail-line {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  height: 1px;
+}
+.bb-rail-line.bb-pos { background: #d24b4b; }
+.bb-rail-line.bb-neg { background: #4b6fd2; }
+
+.bb-channel {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  background: #dedacb;
+  border-top: 1px solid #c2bdad;
+  border-bottom: 1px solid #c2bdad;
+}
+
+/* Each hole is a handle. Override React Flow's per-side transform so the
+   explicit left/top we set positions the hole by its center. */
+.breadboard-node .react-flow__handle.bb-hole {
+  width: 7px;
+  height: 7px;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 1.5px;
+  background: #2c2c30;
+  border: 1px solid #9a958a;
+  transform: translate(-50%, -50%);
+}
+
+.breadboard-node .react-flow__handle.bb-hole:hover {
+  background: #1668c1;
+  border-color: #1668c1;
+}
+
+/* ---- Wires ---- */
+
+.react-flow__edge-path {
+  stroke-width: 2;
+}
+
+/* Selection cannot be signalled by stroke color any more -- the wire's own
+   color is an inline style and always wins -- so use weight and a glow. */
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke-width: 3.5;
+  filter: drop-shadow(0 0 3px rgb(22 104 193 / 0.85));
+}
+
+/* ---- Wire color palette ---- */
+
+.react-flow__panel.wire-palette {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 10px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #ffffff;
+  border: 1px solid #d8d8d8;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.15);
+}
+
+.wire-palette-label {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6b6b6b;
+  margin-right: 2px;
+}
+
+.wire-swatch {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgb(0 0 0 / 0.25);
+  cursor: pointer;
+}
+
+.wire-swatch:hover {
+  transform: scale(1.12);
+}
+
+.wire-swatch.is-active {
+  outline: 2px solid #1668c1;
+  outline-offset: 2px;
+}
+
+/* ---- Editor shell ---- */
+
+.editor {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+.canvas {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* ---- Sidebar ---- */
+
+.sidebar {
+  flex: 0 0 190px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 12px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  background: #fafafa;
+  border-right: 1px solid #e0e0e0;
+}
+
+.sidebar-title {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b6b6b;
+}
+
+.sidebar-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 7px 9px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: transparent;
+  font-size: 13px;
+  color: #2c2c30;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sidebar-item:hover {
+  background: #eef4fc;
+  border-color: #c6dcf7;
+}
+
+.sidebar-swatch {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgb(0 0 0 / 0.25);
+}
+
+.sidebar-hint {
+  margin: 10px 0 0;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #8a8a8a;
+}
+
+/* ---- LED ---- */
+
+.led-node {
+  position: relative;
+}
+
+.led-body {
+  position: absolute;
+  top: 0;
+  border-radius: 50% 50% 42% 42%;
+  border: 1px solid rgb(0 0 0 / 0.3);
+}
+
+/* the flat that marks the cathode side on a real LED */
+.led-flat {
+  position: absolute;
+  right: -1px;
+  bottom: 2px;
+  width: 1px;
+  height: 9px;
+  background: rgb(0 0 0 / 0.45);
+}
+
+.led-polarity {
+  position: absolute;
+  top: 30px;
+  font-size: 10px;
+  line-height: 1;
+  color: #555;
+  user-select: none;
+}
+
+.led-leg {
+  position: absolute;
+  width: 2px;
+  margin-left: -1px;
+  background: linear-gradient(#b9b9b9, #8f8f8f);
+}
+
+.led-node .react-flow__handle.led-pin {
+  width: 6px;
+  height: 6px;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 1.5px;
+  background: #8f8f8f;
+  border: 1px solid #6f6f6f;
+  transform: translate(-50%, -50%);
+}
+
+.led-node .react-flow__handle.led-pin:hover {
+  background: #1668c1;
+  border-color: #1668c1;
+}
+
+/* ---- Seated parts ---- */
+
+/* A pin sitting in a hole reads as seated metal rather than an open contact.
+   Extra specificity so it beats the per-part pin rules above. */
+.react-flow__node.is-seated .react-flow__handle.port {
+  background: #3f7d3f;
+  border-color: #2f5f2f;
+}
+
+/* ---- Limit switch ---- */
+
+.limit-switch-node {
+  position: relative;
+}
+
+.ls-body {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  border-radius: 2px;
+  background: linear-gradient(#4a4a52, #33333a);
+  border: 1px solid #22222a;
+}
+
+/* the snap-action lever across the top */
+.ls-lever {
+  position: absolute;
+  left: 4px;
+  right: 6px;
+  border-radius: 2px;
+  background: linear-gradient(#dcdcdc, #a5a5a5);
+  border: 1px solid #8a8a8a;
+  transform: rotate(-7deg);
+  transform-origin: left center;
+}
+
+.ls-leg {
+  position: absolute;
+  width: 2px;
+  margin-left: -1px;
+  background: linear-gradient(#c8c8c8, #909090);
+}
+
+.ls-label {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 7px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #6b6b6b;
+  user-select: none;
+}
+
+.limit-switch-node .react-flow__handle.ls-pin {
+  width: 6px;
+  height: 6px;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 1.5px;
+  background: #8f8f8f;
+  border: 1px solid #6f6f6f;
+  transform: translate(-50%, -50%);
+}
+
+.limit-switch-node .react-flow__handle.ls-pin:hover {
+  background: #1668c1;
+  border-color: #1668c1;
+}
