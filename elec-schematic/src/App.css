@@ -182,3 +182,103 @@
     border-right-color: var(--border);
   }
 }
+
+/* ---- Breadboard node ---- */
+
+.breadboard-node {
+  position: relative;
+  box-sizing: border-box;
+  background: #efedE6;
+  border: 1px solid #c7c3b6;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.2);
+}
+
+.bb-rail-line {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  height: 1px;
+}
+.bb-rail-line.bb-pos { background: #d24b4b; }
+.bb-rail-line.bb-neg { background: #4b6fd2; }
+
+.bb-channel {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  background: #dedacb;
+  border-top: 1px solid #c2bdad;
+  border-bottom: 1px solid #c2bdad;
+}
+
+/* Each hole is a handle. Override React Flow's per-side transform so the
+   explicit left/top we set positions the hole by its center. */
+.breadboard-node .react-flow__handle.bb-hole {
+  width: 7px;
+  height: 7px;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 1.5px;
+  background: #2c2c30;
+  border: 1px solid #9a958a;
+  transform: translate(-50%, -50%);
+}
+
+.breadboard-node .react-flow__handle.bb-hole:hover {
+  background: #1668c1;
+  border-color: #1668c1;
+}
+
+/* ---- Wires ---- */
+
+.react-flow__edge-path {
+  stroke-width: 2;
+}
+
+/* Selection cannot be signalled by stroke color -- the wire's own color is an
+   inline style and always wins -- so use weight and a glow. */
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke-width: 3.5;
+  filter: drop-shadow(0 0 3px rgb(22 104 193 / 0.85));
+}
+
+/* ---- Wire color palette ---- */
+
+.react-flow__panel.wire-palette {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 10px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #ffffff;
+  border: 1px solid #d8d8d8;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.15);
+}
+
+.wire-palette-label {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6b6b6b;
+  margin-right: 2px;
+}
+
+.wire-swatch {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgb(0 0 0 / 0.25);
+  cursor: pointer;
+}
+
+.wire-swatch:hover {
+  transform: scale(1.12);
+}
+
+.wire-swatch.is-active {
+  outline: 2px solid #1668c1;
+  outline-offset: 2px;
+}
